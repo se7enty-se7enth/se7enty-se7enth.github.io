@@ -231,15 +231,14 @@ h2 {
   height: 15px;
 }
 
-/* @media (max-width:1600px) {
-    .header {
-        display: none;
-    }
-
-    .footer {
-        display: none;
-    }
-} */
+@media (max-width: 1600px) {
+  .header {
+    display: none;
+  }
+  .footer {
+    display: none;
+  }
+}
 .container {
   max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
   margin-inline: auto;
