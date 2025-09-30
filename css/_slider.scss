@@ -1,0 +1,29 @@
+@use "variables" as v;
+
+.swiper {
+    width: 100%;
+    height: 100%;
+
+    &-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    &-pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+
+        span {
+            background-color: var(--color-light);
+            width: 15px;
+            height: 15px;
+        }
+    }
+}
