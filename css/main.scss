@@ -1,0 +1,474 @@
+@use "normalize";
+@use "reset";
+@use "utils";
+@use "fonts";
+@use "mixins" as m;
+@use "variables" as v;
+@use "slider";
+
+body {
+    font-family: var(--main-font);
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+noscript {
+    text-align: center;
+    margin: 10px;
+    color: red;
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+a {
+    color: var(--color-light);
+
+    &:hover {
+        color: var(--color-light-gray);
+        transition-duration: v.$transition-duration;
+    }
+}
+
+input {
+    outline: none;
+    padding-left: 15px;
+}
+
+.content {
+    background-color: var(--color-light-gray);
+}
+
+.empty {
+    width: 40vw;
+}
+
+.section:not(:first-of-type) {
+    padding-block: 25px;
+
+    @include m.down(md) {
+        padding-block: 20px;
+    }
+}
+
+.title h2 {
+    color: var(--color-accent);
+    font-size: var(--font-size-h2);
+    margin-bottom: 30px;
+
+    @include m.down(sm) {
+        margin-bottom: 15px;
+        font-size: var(--font-size-h2-sm);
+    }
+}
+
+.header__top {
+    background-color: var(--color-light-gray);
+
+    .container {
+        display: flex;
+    }
+
+    &-inner {
+        @include m.flex(row, space-between, center, 20px);
+        width: 60vw;
+    }
+
+    .header__logo {
+        height: 40px;
+        flex-shrink: 0;
+    }
+
+    .header__form .input {
+        border: var(--border-input);
+        border-radius: v.$border-radius;
+        font-size: 12px;
+        color: var(--color-accent);
+        padding: 3px 0 3px 15px;
+        width: clamp(160px, 40vw, 260px);
+
+        &::placeholder {
+            color: var(--color-accent);
+        }
+    }
+
+    .header__burger--button {
+        @include m.flex (row, start, center, 6px);
+        width: 100%;
+        max-width: 110px;
+        height: 26px;
+        padding-left: 15px;
+        border-radius: v.$border-radius;
+        border: none;
+        background-color: var(--color-light);
+        font-weight: 600;
+
+        &__icon {
+            @include m.flex(column, start, center, 4px);
+            max-width: max-content;
+        }
+
+        &__line {
+            background-color: var(--color-dark);
+            width: 14px;
+            height: 2px;
+            border-radius: v.$border-radius;
+        }
+    }
+}
+
+.header__bottom {
+    padding-block: 8px;
+    background-color: var(--color-accent);
+
+    .container {
+        @include m.flex (row, space-between, center, 25px);
+
+        @include m.down(md) {
+            justify-content: end;
+        }
+
+        a {
+            display: inline-flex;
+            align-items: center;
+            height: 44px;
+        }
+    }
+
+    .nav--header__bottom__items {
+        @include m.flex(row, start, center, 15px)
+    }
+
+    &__contacts {
+        @include m.flex (row, start, center, 20px)
+    }
+
+    .burger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 26px;
+        height: 18px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 101;
+
+        span {
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        &.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(10.5px);
+        }
+
+        &.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        &.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10.5px);
+        }
+
+    }
+
+    /* .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 99;
+    } ДЕФОЛТНЫЙ */
+
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 99;
+
+        &.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    @include m.down(md) {
+        .container {
+            justify-content: end;
+        }
+
+        .burger {
+            display: flex;
+        }
+
+        .nav--header__bottom {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: var(--color-accent);
+            transition: right 0.3s ease;
+            z-index: 100;
+
+            &__items {
+                flex-direction: column;
+                align-items: start;
+                padding: 70px 30px;
+                gap: 15px;
+            }
+        }
+
+        .header__bottom__contacts {
+            display: none;
+        }
+
+        .nav--header__bottom.active {
+            right: 0;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    }
+}
+
+.first__screen__slider {
+    padding-bottom: 25px;
+
+    .swiper-pagination {
+        margin-bottom: 10px
+    }
+}
+
+.categories__items {
+    @include m.grid (repeat(4, 1fr), 20px);
+    background-color: var(--color-light);
+    padding: 20px;
+    border-radius: v.$border-radius;
+
+    a {
+        text-align: center;
+        color: var(--color-accent);
+        font-weight: var(--font-weight-normal);
+    }
+
+    .categories__img {
+        @include m.card-img (30px, 15px, hidden);
+        aspect-ratio: 3/2;
+
+        @include m.down(650px) {
+            margin-bottom: 15px;
+        }
+    }
+
+    @include m.down(lg) {
+        grid-template-columns: repeat(3, 1fr)
+    }
+
+    @include m.down(sm) {
+        grid-template-columns: repeat(2, 1fr)
+    }
+
+    @include m.down(450px) {
+        grid-template-columns: repeat(1, 1fr)
+    }
+}
+
+.popular__products {
+    &__items {
+        @include m.grid(repeat(4, 1fr), 20px);
+        background-color: var(--color-light);
+        padding: 20px;
+        border-radius: v.$border-radius;
+
+        @include m.down(lg) {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        @include m.down(sm) {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        @include m.down(450px) {
+            grid-template-columns: repeat(1, 1fr)
+        }
+    }
+
+    &__item a {
+        color: var(--color-dark);
+        text-align: center;
+    }
+
+    &__img {
+        @include m.card-img(20px, 15px, hidden);
+        aspect-ratio: 3/4;
+
+        @include m.down(450px) {
+            max-width: 250px;
+            margin: 0 auto;
+            margin-bottom: 15px;
+        }
+    }
+
+    &__title {
+        margin-bottom: 8px;
+        color: var(--color-accent);
+    }
+
+    &__info {
+        @include m.flex(column, center, stretch, 8px);
+
+        &-item {
+            display: flex;
+            justify-content: space-between;
+
+            span {
+                font-weight: 700;
+            }
+        }
+
+        @include m.down(650px) {
+            display: none;
+        }
+    }
+}
+
+.feedback__form {
+    background-color: var(--color-light);
+    border-radius: v.$border-radius;
+    max-width: 800px;
+    margin: 0 auto;
+    @include m.flex(column, center, center, 20px);
+    padding: 20px;
+    box-shadow: 0 0 4px 0 #00000066;
+
+    &-item {
+        @include m.flex(column, center, start, 10px);
+
+        label {
+            font-size: 22px;
+            font-weight: var(--font-weight-normal);
+            color: var(--color-accent);
+        }
+
+        input {
+            width: 80vw;
+            max-width: 570px;
+            font-size: var(--font-size-secondary);
+            border: var(--border-input);
+            border-radius: 5px;
+            padding: 5px 0 5px 15px;
+            color: var(--color-accent);
+
+            &:focus {
+                box-shadow: 0 0 4px 0 var(--color-accent);
+            }
+        }
+    }
+
+    .feedback__submit {
+        font-weight: var(--font-weight-normal);
+        color: var(--color-light);
+        background-color: var(--color-accent);
+        border: none;
+        height: 38px;
+        padding-inline: 45px;
+        transition-duration: v.$transition-duration;
+
+
+        @include m.hover {
+            color: var(--color-light-gray);
+        }
+    }
+
+    @include m.down(md) {
+        gap: 15px
+    }
+}
+
+.contacts__items {
+    @include m.flex(row, space-between, stretch, 25px);
+
+    .contacts__item {
+        box-shadow: 0 0 4px 0 #00000066;
+        width: 100%;
+        max-width: 575px;
+        padding: 20px;
+        border-radius: v.$border-radius;
+        @include m.flex(column, center, start, 30px);
+        color: var(--color-dark);
+        background-color: var(--color-light);
+
+        @include m.down(md) {
+            height: 360px;
+            gap: 15px;
+            justify-content: stretch;
+        }
+
+        .contacts__item-inner,
+        address {
+            @include m.flex(column, start, start, 15px);
+            font-style: normal;
+        }
+
+        h3 {
+            font-weight: var(--font-weight-normal);
+            font-size: 22px;
+            color: var(--color-accent);
+        }
+
+        a {
+            color: var(--color-dark);
+        }
+
+        .contacts__map {
+            width: 100%;
+            height: 100%;
+
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    @include m.down(md) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.footer {
+    padding-block: 50px;
+    background-color: var(--color-accent);
+
+    .container {
+        @include m.flex(row, space-between, center, 20px);
+        font-size: var(--font-size-secondary);
+        font-weight: var(--font-weight-normal);
+
+        @include m.down(sm) {
+            flex-direction: column;
+            align-items: start;
+            gap: 50px;
+        }
+    }
+
+    &-item:first-of-type {
+        @include m.flex(column, start, start, 25px);
+    }
+
+    &-item ul {
+        @include m.grid(repeat(2, 1fr), 13px 25px);
+        align-self: flex-end;
+    }
+}

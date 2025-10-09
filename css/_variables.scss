@@ -1,0 +1,35 @@
+:root {
+    --color-light-gray: #ebebeb;
+    --color-light: #fff;
+    --color-dark: #000;
+    --color-accent: #630038;
+
+    --main-font: "inter", sans-serif;
+    --font-size-h1: 48px;
+    --font-size-h2: 35px;
+    --font-size-h2-sm: 30px;
+    --font-size-secondary: 20px;
+    --font-weight-normal: 500;
+
+    --border-input: 1px solid var(--color-accent);
+
+    --container-width: 1200px;
+    --container-padding-x: 20px;
+
+    /* --section-padding-y: 25px; */
+}
+
+$border-radius: 15px;
+$transition-duration: 0.2s;
+
+$breakpoints: (
+    sm: 576px,
+    // телефоны
+    md: 768px,
+    // маленькие планшеты
+    lg: 1024px,
+    // планшеты/ноуты
+    xl: 1280px,
+    // стандартные десктопы
+    xxl: 1440px // широкие мониторы
+);
